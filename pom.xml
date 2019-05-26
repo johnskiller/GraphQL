@@ -8,16 +8,21 @@
 		<version>2.1.5.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	
 	<groupId>com.skykiller</groupId>
 	<artifactId>GraphQL</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>GraphQL</name>
 	<description>GraphSQL demo with VUE-element front and  Spring Boot backend</description>
+	<packaging>pom</packaging>
 
 	<properties>
 		<java.version>11</java.version>
 	</properties>
-
+	<modules>
+		<module>common</module>
+		<module>backend</module>
+	</modules>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -70,13 +75,6 @@
 		
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+
 
 </project>

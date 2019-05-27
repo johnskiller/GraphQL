@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class ProductController {
 
-  private final ProductRepository repository;
+  private final ProductService service;
 
-  ProductController(ProductRepository repository) {
-    this.repository = repository;
+  ProductController(ProductService service) {
+    this.service = service;
   }
 
   // Aggregate root
 
   @GetMapping("/products")
   List<Product> all() {
-    return repository.findAll();
+    return service.getAll();
   }
 
   @PostMapping("/products")
   Product newProduct(@RequestBody Product newProduct) {
-    return repository.save(newProduct);
+    return service.save(newProduct);
   }
 
   // Single item
@@ -36,27 +36,18 @@ class ProductController {
   @GetMapping("/products/{id}")
   Product one(@PathVariable Long id) {
 
-    return repository.findById(id)
-      .orElseThrow(() -> new ProductNotFoundException(id));
+    return service.findById(id);
+
   }
 
   @PutMapping("/products/{id}")
   Product replaceProduct(@RequestBody Product newProduct, @PathVariable Long id) {
 
-    return repository.findById(id)
-      .map(Product -> {
-        Product.setName(newProduct.getName());
-        Product.setPrice(newProduct.getPrice());
-        return repository.save(Product);
-      })
-      .orElseGet(() -> {
-        newProduct.setId(id);
-        return repository.save(newProduct);
-      });
+   return service.replaceProduct(newProduct, id);
   }
 
   @DeleteMapping("/products/{id}")
   void deleteProduct(@PathVariable Long id) {
-    repository.deleteById(id);
+    service.deleteById(id);
   }
 }
